@@ -9,21 +9,28 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 
 
-import java.time.Duration;
+import org.openqa.selenium.edge.EdgeOptions;
 
 public class BaseTest {
 
     protected WebDriver driver;
 
 
-    @BeforeMethod
-    public void setUp(@Optional("chrome") String browser , @Optional("true")String headless)
-    {
-        driver = new EdgeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        driver.get("https://www.saucedemo.com/");
-    }
+ @BeforeMethod
+public void setUp(@Optional("chrome") String browser,
+                  @Optional("true") String headless)
+{
+    EdgeOptions options = new EdgeOptions();
+
+    options.addArguments("--headless=new");
+    options.addArguments("--disable-gpu");
+    options.addArguments("--window-size=1920,1080");
+
+    driver = new EdgeDriver(options);
+
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+    driver.get("https://www.saucedemo.com/");
+}
 
 
 

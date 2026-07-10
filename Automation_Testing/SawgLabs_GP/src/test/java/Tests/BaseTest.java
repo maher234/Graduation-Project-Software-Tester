@@ -7,14 +7,12 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
-import java.time.Duration;
-
 import org.openqa.selenium.edge.EdgeOptions;
+import java.time.Duration;
 
 public class BaseTest {
 
     protected WebDriver driver;
-
 
     @BeforeMethod
     public void setUp(@Optional("chrome") String browser,
@@ -22,19 +20,17 @@ public class BaseTest {
     {
         EdgeOptions options = new EdgeOptions();
 
-        options.addArguments("--no-sandbox"); 
-        options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--headless=new");
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
 
         driver = new EdgeDriver(options);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.get("https://www.saucedemo.com/");
     }
-
-
 
     @AfterMethod
     public void tearDown(ITestResult result) throws InterruptedException {
@@ -46,6 +42,5 @@ public class BaseTest {
         Thread.sleep(3000);
         driver.quit();
     }
-
 }
 }
